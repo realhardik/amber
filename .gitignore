@@ -1,0 +1,12 @@
+node_modules/
+test-results/
+playwright-report/
+.DS_Store
+.cache/
+dist/
+.env
+.env.*
+!.env.example
+
+# Local release artifacts and isolated package consumers
+.release/

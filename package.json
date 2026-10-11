@@ -1,0 +1,29 @@
+{
+  "name": "amber",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Amber - High-performance smooth scrolling engine and animation system for the modern web.",
+  "author": "Hardik Gandhi <hardik.dev.08@gmail.com>",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=amber-scroll",
+    "build": "npm run build --workspace=amber-scroll && npm run build --workspace=amber-motion",
+    "size": "npm run size --workspace=amber-scroll && npm run size --workspace=amber-motion",
+    "test": "npm test --workspace=amber-scroll && npm test --workspace=amber-motion",
+    "test:unit": "npm test --workspace=amber-scroll && npm test --workspace=amber-motion",
+    "test:types": "node scripts/check-types.mjs",
+    "test:release": "node scripts/check-release.mjs",
+    "test:browser": "npm run test:browser --workspace=amber-scroll && npm run test:browser --workspace=amber-motion",
+    "check": "npm test && npm run test:types && npm run test:browser"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "typescript": "^7.0.2"
+  }
+}

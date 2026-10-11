@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Amber animation integration fixture</title>
+<style>
+  body { margin: 0; }
+  #viewport { width: 600px; height: 400px; overflow: hidden; }
+  main { display: flex; flex-direction: column; }
+  section { flex: none; height: 500px; width: 600px; }
+  .box { width: 80px; height: 80px; background: coral; }
+</style>
+<div id="viewport"><main data-amber>
+  <section><div id="box" class="box"></div></section>
+  <section><div id="pin"><div id="inner" class="box"></div></div></section>
+  <section></section><section></section>
+</main></div>
+<svg viewBox="0 0 100 100" width="100" height="100">
+  <path id="path" d="M0 0 L100 0 L50 100 Z" fill="none" stroke="black" />
+</svg>
+<script type="module">
+  import Amber from '/amber/src/index.js';
+  import transform from '/amber/src/transform.js';
+  import { parallax, pinning } from '/amber/src/plugins/effects.js';
+  import infinite from '/amber/src/plugins/infinite.js';
+  import * as animation from '/motion/src/index.js';
+  import * as svgAnimation from '/motion/src/svg.js';
+  window.Amber = Amber;
+  window.createAmber = (options = {}) => new Amber({ plugins: [parallax, pinning, infinite], ...options,
+    renderer: options.renderer === 'native' ? 'native' : transform });
+  window.animation = animation;
+  window.svgAnimation = svgAnimation;
+  window.ready = true;
+</script>
+</html>

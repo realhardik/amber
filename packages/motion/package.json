@@ -1,0 +1,30 @@
+{
+  "name": "amber-motion",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Dependency-free DOM animation engine with timelines, SVG tools, and optional Amber scroll bindings.",
+  "license": "MIT",
+  "author": "Hardik Gandhi <hardik.dev.08@gmail.com>",
+  "keywords": ["animation", "motion", "svg", "timeline", "scroll-animation", "esm"],
+  "repository": { "type": "git", "url": "git+https://github.com/realhardik/amber.git", "directory": "packages/motion" },
+  "bugs": { "url": "https://github.com/realhardik/amber/issues" },
+  "homepage": "https://github.com/realhardik/amber/tree/main/packages/motion#readme",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./svg": { "types": "./dist/svg.d.ts", "default": "./dist/svg.js" }
+  },
+  "files": ["dist", "README.md", "ERRORS.md", "LICENSE"],
+  "publishConfig": { "access": "public" },
+  "sideEffects": false,
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:browser": "playwright test",
+    "build": "node ../../scripts/build-dist.mjs motion",
+    "size": "node ../../scripts/size-check.mjs motion",
+    "prepack": "npm run build && npm run size"
+  },
+  "peerDependencies": { "amber-scroll": "^1.0.0" },
+  "peerDependenciesMeta": { "amber-scroll": { "optional": true } },
+  "devDependencies": { "@playwright/test": "^1.63.0" }
+}

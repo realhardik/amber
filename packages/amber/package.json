@@ -1,0 +1,41 @@
+{
+  "name": "amber-scroll",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Modular smooth scrolling with native and transform renderers, 2D movement, infinite loops, and optional effects.",
+  "license": "MIT",
+  "author": "Hardik Gandhi <hardik.dev.08@gmail.com>",
+  "keywords": ["scroll", "smooth-scroll", "infinite-scroll", "parallax", "animation", "2d", "esm"],
+  "repository": { "type": "git", "url": "git+https://github.com/realhardik/amber.git", "directory": "packages/amber" },
+  "bugs": { "url": "https://github.com/realhardik/amber/issues" },
+  "homepage": "https://github.com/realhardik/amber/tree/main/packages/amber#readme",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./transform": { "types": "./dist/transform.d.ts", "default": "./dist/transform.js" },
+    "./infinite": { "types": "./dist/plugins/infinite.d.ts", "default": "./dist/plugins/infinite.js" },
+    "./effects": { "types": "./dist/plugins/effects.d.ts", "default": "./dist/plugins/effects.js" },
+    "./parallax": { "types": "./dist/plugins/parallax.d.ts", "default": "./dist/plugins/parallax.js" },
+    "./pinning": { "types": "./dist/plugins/pinning.d.ts", "default": "./dist/plugins/pinning.js" },
+    "./snap": { "types": "./dist/plugins/snap.d.ts", "default": "./dist/plugins/snap.js" },
+    "./sections": { "types": "./dist/plugins/sections.d.ts", "default": "./dist/plugins/sections.js" }
+  },
+  "files": ["dist", "README.md", "ERRORS.md", "LICENSE"],
+  "publishConfig": { "access": "public" },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "node scripts/serve.js",
+    "test": "node --test tests/unit/*.test.js",
+    "test:browser": "playwright test",
+    "check": "npm test && npm run test:browser",
+    "build": "node ../../scripts/build-dist.mjs amber",
+    "size": "node ../../scripts/size-check.mjs amber",
+    "prepack": "npm run build && npm run size"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

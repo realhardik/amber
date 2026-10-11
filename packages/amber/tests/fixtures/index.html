@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Amber — development fixture</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 32px; font: 16px/1.5 system-ui, sans-serif; color: #25221d; background: #f4f0e8; }
+    h1 { font-size: 24px; }
+    #controls { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    button, select { font: inherit; padding: 6px 12px; }
+    #loop-control { display: flex; align-items: center; gap: 10px; flex-basis: 100%; padding: 12px; border: 1px solid #9b7740; background: #ead4ae; font-weight: 600; }
+    #loop-control input { width: 18px; height: 18px; margin: 0; }
+    #loop-control small { font-weight: 400; }
+    #viewport { width: min(640px, 90vw); height: 320px; overflow: auto; border: 2px solid #665a44; position: relative; }
+    #content { width: 100%; }
+    #content.horizontal { display: flex; width: max-content; height: 100%; }
+    section { height: 420px; padding: 28px; background: #e9d2a7; position: relative; }
+    section:nth-child(even) { background: #cfb88e; }
+    #content.horizontal section { width: 560px; height: 100%; flex: none; }
+    #nested { width: 220px; height: 100px; overflow: auto; background: #faf7f1; margin-top: 16px; }
+    #nested-inner { height: 400px; padding: 12px; }
+    #readout { margin-top: 16px; min-height: 48px; contain: layout paint; font: 13px ui-monospace, monospace; }
+    .note { max-width: 640px; }
+  </style>
+</head>
+<body>
+  <h1>Amber development fixture</h1>
+  <p class="note">A local engine test surface. The Amber showcase website comes next.</p>
+  <div id="controls">
+    <select id="axis" aria-label="Orientation"><option value="vertical">Vertical</option><option value="horizontal">Horizontal</option></select>
+    <select id="renderer" aria-label="Renderer"><option value="transform">Transform</option><option value="native">Native position</option></select>
+    <label id="loop-control"><input id="infinite" type="checkbox" aria-describedby="loop-hint"> Infinite loop <small id="loop-hint">Select Transform to enable.</small></label>
+    <label><input id="snap" type="checkbox"> Proximity snap</label>
+    <button id="start">To start</button><button id="end">To end</button>
+  </div>
+  <div id="viewport" tabindex="0" aria-label="Amber scroll viewport">
+    <main id="content" data-amber>
+      <section id="first"><strong>01 / Input</strong><br><input id="input" aria-label="Keyboard test" placeholder="Arrow keys stay here"><div id="nested" tabindex="0"><div id="nested-inner">Native nested scroll area</div></div></section>
+      <section id="second"><strong>02 / Motion</strong><p>Your damping and input tuning.</p></section>
+      <section id="third"><strong>03 / Target</strong><p>Element-based navigation.</p></section>
+      <section id="fourth"><strong>04 / End</strong><p><a id="last-link" href="#first">Focusable anchor at the far end</a></p></section>
+    </main>
+  </div>
+  <div id="readout" aria-live="off"></div>
+  <script type="module">
+    import Amber from '/src/index.js';
+    import transform from '/src/transform.js';
+    import { parallax, pinning } from '/src/plugins/effects.js';
+    import snap from '/src/plugins/snap.js';
+    import sections from '/src/plugins/sections.js';
+    import loop from '/src/plugins/infinite.js';
+    window.Amber = Amber;
+    window.transform = transform;
+    window.amberPlugins = [parallax, pinning, snap, sections, loop];
+    const viewport = document.querySelector('#viewport');
+    const content = document.querySelector('#content');
+    const axis = document.querySelector('#axis');
+    const renderer = document.querySelector('#renderer');
+    const infinite = document.querySelector('#infinite');
+    const loopHint = document.querySelector('#loop-hint');
+    const readout = document.querySelector('#readout');
+    window.mount = (options = {}) => {
+      window.amber?.destroy();
+      content.classList.toggle('horizontal', options.orientation === 'horizontal');
+      viewport.scrollTo({ left: 0, top: 0, behavior: 'instant' });
+      window.scrollEvents = 0;
+      window.endEvents = 0;
+      const amber = window.amber = new Amber({ wrapper: viewport, content, plugins: amberPlugins, ...options,
+        renderer: options.renderer === 'native' ? 'native' : transform });
+      axis.value = amber.options.orientation;
+      renderer.value = amber.options.renderer;
+      infinite.checked = amber.options.infinite;
+      infinite.disabled = false;
+      document.querySelector('#snap').checked = !!amber.options.snap;
+      loopHint.textContent = infinite.disabled ? 'Select Transform to enable.' : 'Repeat the first panel after the last.';
+      let lastReadout = -Infinity;
+      const showState = (state, force = false) => {
+        const now = performance.now();
+        if (!force && state.isScrolling && now - lastReadout < 100) return;
+        lastReadout = now;
+        readout.textContent = `position ${state.position.toFixed(2)} / target ${state.target.toFixed(2)} / ${state.isInfinite ? 'loop' : 'limit'} ${state.limit} / velocity ${state.velocity.toFixed(3)} px/ms${state.isInfinite ? ' / wrapped ' + state.wrappedPosition.toFixed(2) : ''}`;
+      };
+      amber.on('scroll', state => {
+        window.scrollEvents++;
+        showState(state);
+      });
+      amber.on('scrollend', state => { window.endEvents++; showState(state, true); });
+      amber.on('resize', state => showState(state, true));
+      showState(amber.state, true);
+      return amber;
+    };
+    const controls = () => {
+      const orientation = axis.value;
+      const mode = renderer.value;
+      window.mount({ orientation, renderer: mode, infinite: infinite.checked, snap: document.querySelector('#snap').checked ? 'proximity' : false });
+    };
+    document.querySelector('#snap').addEventListener('change', controls);
+    axis.addEventListener('change', controls);
+    renderer.addEventListener('change', controls);
+    infinite.addEventListener('change', controls);
+    document.querySelector('#start').addEventListener('click', () => window.amber.scrollTo('start'));
+    document.querySelector('#end').addEventListener('click', () => window.amber.scrollTo('end'));
+    window.mount();
+  </script>
+</body>
+</html>
