@@ -74,7 +74,7 @@ npm run dev
 - [`amber-scroll` Documentation & API](packages/amber/README.md) — Complete guide: setup, options, edge snapping, parallax, section pinning, infinite loops, and framework integrations (React, Next.js, Vue).
 - [`amber-motion` Documentation & API](packages/motion/README.md) — Animation engine: CSS timelines, opt-in `amber-motion/svg` morphing/path drawing, easing, and scroll synchronization (`bindScroll`).
 - Both packages include TypeScript declarations; no separate `@types` installation is needed.
-- [Release preparation and publishing](RELEASING.md) — validation, packed-package smoke tests, and publish commands.
+- [Release preparation and publishing](RELEASING.md) — validation, packaging, and publishing commands.
 
 ---
 
