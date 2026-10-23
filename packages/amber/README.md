@@ -7,7 +7,9 @@
 [![Tree Shakeable](https://img.shields.io/badge/architecture-modular%20plugins-success.svg?style=flat-square)](#the-plugin-ecosystem)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success.svg?style=flat-square)](#)
 
-Amber is a standalone, dependency-free smooth scrolling engine engineered for high-end creative websites and fluid interactive applications. Built around a **modular, tree-shakeable plugin architecture**, Amber allows you to start with a featherweight native smooth scroll engine (~15KB unminified) and opt into advanced capabilities—such as 2D omnidirectional spatial scrolling, panel transforms, magnetic snapping, GPU parallax, section pinning, and native infinite runways—only when your project demands them.
+Amber is a lightweight, modular JavaScript motion library for **high-end creative websites** and **fluid interactive applications**. It supports 2D scrolling, parallax, pinning, and infinite loops. Paired with [`amber-motion`](https://www.npmjs.com/package/amber-motion), `Amber` delivers smooth scrolling and animation in **about 12 kB combined, minified + gzipped**—roughly **55% smaller** than a comparable setup using separate libraries.
+
+[GitHub source for amber-scroll](https://github.com/realhardik/amber/tree/main/packages/amber)
 
 ---
 
@@ -24,7 +26,7 @@ Amber is a standalone, dependency-free smooth scrolling engine engineered for hi
 - **Element Pinning (Plugin)**: Pin headers, titles, or sidebars across arbitrary section boundaries with zero layout shift and optional dynamic `endOffset`.
 - **Nested Scroll Handoff (`scrollChain: true`)**: Fluid, boundary-aware gesture handoff from inner scrollers to ancestor viewports.
 - **Section Visibility Observer (Plugin)**: High-performance enter/leave triggers calculated from virtual panel geometry with true 2D cross-intersection calculations.
-- **Scrollbar Control**: Declarative `hideScrollbar: true` option and `data-amber-hide-scrollbar` attribute to cleanly suppress scrollbars across all browsers.
+- **Scrollbar Control**: Declarative `hideScrollbar: true` option and `data-amber-hide-scrollbar` attribute to hide native scrollbars on the viewport and marked containers.
 - **Touch & Gesture Isolation**: Robust touchpad, mousewheel, and touch-inertia handling. Respects nested native scrollers, form controls, and zoom gestures.
 - **Accessibility First**: Automatically falls back to immediate/native scrolling when `prefers-reduced-motion` is detected.
 - **TypeScript First**: Full type definitions included out of the box.
@@ -37,7 +39,7 @@ Amber is a standalone, dependency-free smooth scrolling engine engineered for hi
 npm install amber-scroll
 ```
 
-> **Looking for animations?** Pair it with [`amber-motion`](https://github.com/realhardik/amber/tree/main/packages/motion), our zero-dependency companion engine with timeline controls and direct scroll-scrubbing bindings (`bindScroll`). SVG morphing and stroke drawing are opt-in from `amber-motion/svg`.
+> **Looking for animations?** Pair it with [`amber-motion`](https://www.npmjs.com/package/amber-motion), our zero-dependency companion engine with timeline controls and direct scroll-scrubbing bindings (`bindScroll`). SVG morphing and stroke drawing are opt-in from `amber-motion/svg`.
 
 ---
 
@@ -70,11 +72,10 @@ import Amber from 'amber-scroll';
 // Initialize after the DOM has loaded
 const amber = new Amber({
   damping: 0.09, // Lower is smoother/floatier, higher is more responsive (default: 0.09)
-  hideScrollbar: true, // Cleanly hides the page scrollbar across all browsers
 });
 ```
 
-> **Tip:** `hideScrollbar: true` hides the scrollbar for the page. To hide the scrollbar on an inner scrollable container too, simply add the `data-amber-hide-scrollbar` attribute to that container element.
+> **Tip:** The native scrollbar stays visible by default. Set `hideScrollbar: true` to hide it for the page and install the scrollbar styles. While those styles are installed, adding `data-amber-hide-scrollbar` to an inner scrollable container hides its scrollbar too.
 
 ---
 
@@ -215,7 +216,7 @@ Amber recognizes declarative data attributes to customize element behavior:
 
 | Attribute | Target Element | Description |
 | :--- | :--- | :--- |
-| `data-amber` | Container (`<main>`) | Enables automatic discovery when calling `new Amber()` without explicit `wrapper`/`content` options. |
+| `data-amber` | `<main>` | Automatically discovers `main[data-amber]` as content when no explicit `wrapper`/`content` options are supplied. In transform mode, its parent becomes the viewport; native mode uses `window`. Other element types require explicit options. |
 | `data-amber-speed="<number>"` | Element inside a panel | Adds center-relative parallax. `1` is normal speed, `< 1` moves slower (distant background), `> 1` moves faster (foreground). *(Requires `parallax` or `effects` plugin)*. |
 | `data-amber-avoid` | Direct child of content | Excludes this child from transform movement, snap targets, and infinite recycling (ideal for absolute overlays / HUDs). |
 | `data-amber-prevent` | Any subtree / container | Instructs Amber to ignore wheel, touch, and keyboard events originating inside this element (ideal for code editors, inner overflow lists, or interactive canvas elements). |
@@ -282,7 +283,7 @@ const amber = new Amber({
 #### In Native Mode:
 > **Requires**: `import loop from 'amber-scroll/infinite'`
 
-Amber supports an industry-first **native infinite runway**, allowing continuous wrap-around cyclic scrolling using the browser's native scroll engine:
+Amber supports a **native infinite runway**, allowing continuous wrap-around cyclic scrolling using the browser's native scroll engine:
 ```js
 import Amber from 'amber-scroll';
 import loop from 'amber-scroll/infinite';
@@ -578,7 +579,7 @@ amber.resize();
 ```
 
 #### `amber.on(event, callback)` / `amber.off(event, callback)`
-Subscribes to instance events. Returns an unsubscribe function.
+`on()` subscribes to instance events and returns an unsubscribe function. `off()` removes a callback and returns the Amber instance.
 ```js
 const unsubscribe = amber.on('scroll', (state) => {
   console.log(state.positionVector.x, state.positionVector.y);
@@ -724,7 +725,7 @@ onUnmounted(() => {
 
 ## Combining with `amber-motion`
 
-If you are using [`amber-motion`](https://github.com/realhardik/amber/tree/main/packages/motion), you can bind animations directly to Amber's smoothed scroll position without running separate RAF loops.
+If you are using [`amber-motion`](https://www.npmjs.com/package/amber-motion), you can bind animations directly to Amber's smoothed scroll position without running separate RAF loops.
 
 ```js
 import Amber from 'amber-scroll';
@@ -800,16 +801,16 @@ amber.on('scroll', (state: ScrollState) => {
 
 ## Author
 
-**Hardik Gandhi**
+**[Hardik Gandhi](https://hardikgandhi.me)**
 
+[![Website](https://img.shields.io/badge/Website-hardikgandhi.me-000000?style=flat-square)](https://hardikgandhi.me)
 [![GitHub](https://img.shields.io/badge/GitHub-realhardik-181717?style=flat-square&logo=github)](https://github.com/realhardik)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-thehardikgandhi-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/thehardikgandhi)
 [![Instagram](https://img.shields.io/badge/Instagram-he.is.gandhi-E4405F?style=flat-square&logo=instagram)](https://www.instagram.com/he.is.gandhi/)
-[![Pinterest](https://img.shields.io/badge/Pinterest-chill__chief-BD081C?style=flat-square&logo=pinterest)](https://pinterest.com/chill_chief/)
 
 ## License
 
-MIT © [Hardik Gandhi](https://github.com/realhardik)
+MIT © [Hardik Gandhi](https://hardikgandhi.me)
 
 ### Error diagnostics
 

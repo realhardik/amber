@@ -1,12 +1,14 @@
 # amber-motion
 
-> Zero-dependency CSS animation engine with opt-in SVG morphing/stroke drawing, timelines, and direct scroll synchronization.
+> Zero-dependency animation engine with opt-in SVG morphing/stroke drawing, timelines, and direct scroll synchronization.
 
 [![npm version](https://img.shields.io/npm/v/amber-motion.svg?style=flat-square)](https://www.npmjs.com/package/amber-motion)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/dependencies-none-success.svg?style=flat-square)](#)
 
-`amber-motion` is a lightweight, zero-dependency motion engine for hardware-accelerated UI animations, sequential timelines, and direct scroll-scrubbing synchronization with `amber-scroll`. SVG morphing and stroke drawing are available through the opt-in `amber-motion/svg` entry. It has zero runtime dependencies and does not start a frame loop or install browser listeners until an animation is actively played.
+`amber-motion` is a lightweight, zero-dependency motion engine for UI animations, sequential timelines, and direct scroll-scrubbing synchronization with [`amber-scroll`](https://www.npmjs.com/package/amber-scroll). SVG morphing and stroke drawing are available through the opt-in `amber-motion/svg` entry. It has zero runtime dependencies; constructing an animation renders its initial state without starting a frame loop or installing browser listeners. Paired with `amber-scroll`, the smooth scroll and animation engines together are **about 12 kB minified + gzipped**—roughly **55% smaller** than a comparable setup using separate libraries for smooth scrolling and animation. This size includes the native scroll core, animation engine, and `bindScroll`; optional scroll plugins and SVG tools add to that size.
+
+[GitHub source for amber-motion](https://github.com/realhardik/amber/tree/main/packages/motion)
 
 This package includes TypeScript declarations for all exports, options, callbacks, and scroll bindings out of the box (use `import type { MotionOptions, PlayOptions } from 'amber-motion'`, or `SvgMotionOptions` from `amber-motion/svg`).
 
@@ -178,7 +180,9 @@ finite numbers. Units can also be the third entry in `v`; explicit `unit` wins.
 Transform components, clipping, and opacity can run together. For example:
 
 ```js
-new Animation({
+import Motion from 'amber-motion';
+
+new Motion({
   targets: '.heading',
   properties: {
     c: [100, 0],
@@ -416,11 +420,6 @@ or SVG geometry. There are no per-frame DOM geometry reads. Changed output is
 written once; unchanged property values are skipped. Offscreen animations still
 advance; this engine does not add per-element visibility observers.
 
-With a production ESM bundle, importing `animate` from `amber-motion` measures
-about **3.38 kB gzip**. Importing `animate` from `amber-motion/svg` measures about
-**4.61 kB gzip**. These are representative esbuild measurements, not a guarantee
-of every application's final bundle.
-
 ```sh
 npm test --workspace=amber-motion
 npm run test:browser --workspace=amber-motion
@@ -443,13 +442,13 @@ Published builds keep runtime validation but report compact `Amber Mxxx` error c
 
 ## Author
 
-**Hardik Gandhi**
+**[Hardik Gandhi](https://hardikgandhi.me)**
 
+[![Website](https://img.shields.io/badge/Website-hardikgandhi.me-000000?style=flat-square)](https://hardikgandhi.me)
 [![GitHub](https://img.shields.io/badge/GitHub-realhardik-181717?style=flat-square&logo=github)](https://github.com/realhardik)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-thehardikgandhi-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/thehardikgandhi)
 [![Instagram](https://img.shields.io/badge/Instagram-he.is.gandhi-E4405F?style=flat-square&logo=instagram)](https://www.instagram.com/he.is.gandhi/)
-[![Pinterest](https://img.shields.io/badge/Pinterest-chill__chief-BD081C?style=flat-square&logo=pinterest)](https://pinterest.com/chill_chief/)
 
 ## License
 
-MIT © [Hardik Gandhi](https://github.com/realhardik)
+MIT © [Hardik Gandhi](https://hardikgandhi.me)

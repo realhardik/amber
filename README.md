@@ -12,15 +12,15 @@ This repository is organized as an npm workspace containing the core engine and 
 
 | Package | Version | Description |
 | :--- | :--- | :--- |
-| [`amber-scroll`](packages/amber) | `1.0.0` | Standalone smooth-scroll engine with native and transform rendering, virtual keyboard isolation, infinite seams, and parallax. |
-| [`amber-motion`](packages/motion) | `1.0.0` | Optional, zero-dependency motion engine for CSS animation, timelines, and scroll-linked reactivity; SVG tools are opt-in via `amber-motion/svg`. |
+| [`amber-scroll`](packages/amber) | `1.0.1` | Standalone smooth-scroll engine with native and transform rendering, virtual keyboard isolation, infinite seams, and parallax. |
+| [`amber-motion`](packages/motion) | `1.0.1` | Optional, zero-dependency motion engine for CSS animation, timelines, and scroll-linked reactivity; SVG tools are opt-in via `amber-motion/svg`. |
 
 ---
 
 ## Features
 
 ### `amber-scroll`
-- **Modular Plugin Architecture**: Featherweight core for native document scrolling, with on-demand subpath plugins for transforms, edge snapping, parallax, pinning, sections, and native infinite looping.
+- **Modular Plugin Architecture**: Native document scrolling core, with on-demand subpath plugins for transforms, edge snapping, parallax, pinning, sections, and native infinite looping.
 - **Omnidirectional Multi-Axis**: True 2D vector scrolling (`orientation: 'both'`) across spatial canvases, maps, photo matrices, and creative grids. X/Y targets settle independently; Shift + wheel is an explicit horizontal fallback.
 - **Dual-Mode Rendering**: Default native scrolling for standard web documents, or virtualized sub-pixel smoothing via the `transform` renderer module.
 - **Infinite Seams**: Closed-loop cyclic scrolling with seamless wrap-around, velocity preservation, and zero-gap edge transitions in both transform and native modes.
@@ -40,6 +40,28 @@ This repository is organized as an npm workspace containing the core engine and 
 ## Quick Start
 
 ### Installation
+
+Install both the smooth scroll and animation engines in your project:
+
+```bash
+npm install amber-scroll amber-motion
+```
+
+You can also install either package on its own:
+
+```bash
+# Smooth scrolling only
+npm install amber-scroll
+
+# Animation only
+npm install amber-motion
+```
+
+See the [amber-scroll guide](packages/amber/README.md#quick-start) or [amber-motion guide](packages/motion/README.md#create-an-animation) for usage examples. Scroll bindings require both packages.
+
+## Development
+
+From a clone of this repository, install the workspace dependencies:
 
 ```bash
 npm install
@@ -97,13 +119,13 @@ amber/
 
 ## Author
 
-**Hardik Gandhi**
+**[Hardik Gandhi](https://hardikgandhi.me)**
 
+[![Website](https://img.shields.io/badge/Website-hardikgandhi.me-000000?style=flat-square)](https://hardikgandhi.me)
 [![GitHub](https://img.shields.io/badge/GitHub-realhardik-181717?style=flat-square&logo=github)](https://github.com/realhardik)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-thehardikgandhi-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/thehardikgandhi)
 [![Instagram](https://img.shields.io/badge/Instagram-he.is.gandhi-E4405F?style=flat-square&logo=instagram)](https://www.instagram.com/he.is.gandhi/)
-[![Pinterest](https://img.shields.io/badge/Pinterest-chill__chief-BD081C?style=flat-square&logo=pinterest)](https://pinterest.com/chill_chief/)
 
 ## License
 
-MIT © [Hardik Gandhi](https://github.com/realhardik)
+MIT © [Hardik Gandhi](https://hardikgandhi.me)
