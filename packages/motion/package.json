@@ -1,10 +1,10 @@
 {
   "name": "amber-motion",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "description": "Dependency-free DOM animation engine with timelines, SVG tools, and optional Amber scroll bindings.",
   "license": "MIT",
-  "author": "Hardik Gandhi <hardik.dev.08@gmail.com>",
+  "author": "Hardik Gandhi <hardik.dev.08@gmail.com> (https://hardikgandhi.me)",
   "keywords": ["animation", "motion", "svg", "timeline", "scroll-animation", "esm"],
   "repository": { "type": "git", "url": "git+https://github.com/realhardik/amber.git", "directory": "packages/motion" },
   "bugs": { "url": "https://github.com/realhardik/amber/issues" },

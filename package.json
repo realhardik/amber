@@ -1,10 +1,10 @@
 {
   "name": "amber",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "description": "Amber - High-performance smooth scrolling engine and animation system for the modern web.",
-  "author": "Hardik Gandhi <hardik.dev.08@gmail.com>",
+  "author": "Hardik Gandhi <hardik.dev.08@gmail.com> (https://hardikgandhi.me)",
   "workspaces": [
     "packages/*"
   ],

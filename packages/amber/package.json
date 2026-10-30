@@ -1,10 +1,10 @@
 {
   "name": "amber-scroll",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "description": "Modular smooth scrolling with native and transform renderers, 2D movement, infinite loops, and optional effects.",
   "license": "MIT",
-  "author": "Hardik Gandhi <hardik.dev.08@gmail.com>",
+  "author": "Hardik Gandhi <hardik.dev.08@gmail.com> (https://hardikgandhi.me)",
   "keywords": ["scroll", "smooth-scroll", "infinite-scroll", "parallax", "animation", "2d", "esm"],
   "repository": { "type": "git", "url": "git+https://github.com/realhardik/amber.git", "directory": "packages/amber" },
   "bugs": { "url": "https://github.com/realhardik/amber/issues" },

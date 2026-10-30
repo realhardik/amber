@@ -12,8 +12,8 @@ This repository is organized as an npm workspace containing the core engine and 
 
 | Package | Version | Description |
 | :--- | :--- | :--- |
-| [`amber-scroll`](packages/amber) | `1.0.1` | Standalone smooth-scroll engine with native and transform rendering, virtual keyboard isolation, infinite seams, and parallax. |
-| [`amber-motion`](packages/motion) | `1.0.1` | Optional, zero-dependency motion engine for CSS animation, timelines, and scroll-linked reactivity; SVG tools are opt-in via `amber-motion/svg`. |
+| [`amber-scroll`](packages/amber) | `1.0.2` | Standalone smooth-scroll engine with native and transform rendering, virtual keyboard isolation, infinite seams, and parallax. |
+| [`amber-motion`](packages/motion) | `1.0.2` | Optional, zero-dependency motion engine for CSS animation, timelines, and scroll-linked reactivity; SVG tools are opt-in via `amber-motion/svg`. |
 
 ---
 
